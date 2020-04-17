@@ -1,0 +1,355 @@
+entity UtentiRichiesteAll {
+  idUtentiRichiesteAll Integer,
+  descrDocumento String,  
+  blobdoc Blob
+}
+
+entity Utenti {
+  codUte String,
+  userId String,
+  descrizione String,
+  nome String,
+  cognome String,
+  comune String,
+  indirizzo String,
+  cap String,
+  latitudine BigDecimal,
+  longitudine BigDecimal,
+  pfg String,
+  cf String,
+  piva String,
+  email String,
+  NTelefono String,
+  NCellulare String,
+  password String,
+  dtScadpwd ZonedDateTime,
+  admin String,
+  primoAcc String,
+  daApprovare String,
+  stato String,
+  privacy01 String,
+  privacy02 String,
+  privacy03 String,
+  privacy04 String,
+  privacy05 String,
+  privacy06 String,
+  privacy07 String,
+  privacy08 String,
+  privacy09 String,
+  privacy10 String,
+  dtConsenso ZonedDateTime
+}
+
+entity TabTipiRichiestaDoc {
+  idTipoRichiestaDoc Integer,
+  dataInizioValidita ZonedDateTime,
+  dataFineValidita ZonedDateTime,
+  descrDocumento String,
+  blobdoc Blob
+}
+
+entity TabProdottiDoc {
+  idProdottoDoc Integer,
+  dataInizioValidita ZonedDateTime,
+  dataFineValidita ZonedDateTime,
+  descrDocumento String,
+  blobdoc Blob
+}
+
+entity TabProdotti {
+  codProdotto String,
+  descrProdotto String
+}
+
+entity UtentiRuoli {
+  id UtentiRuoliId
+}
+
+entity TabTipiOggetto {
+  idTipoOggetto Integer,
+  tipoOggetto String,
+  descrOggetto String,
+  ordine Integer,
+  iconaOggetto String,
+  tipoLinea String
+}
+
+entity ActionLog {
+  id Integer,
+  datainserim ZonedDateTime,
+  action String,
+  remoteIpAddress String,
+  remoteHostName String,
+  localIpAddress String,
+  localHostName String,
+  protocol String,
+  httpMethod String,
+  authType String,
+  requestDate String,
+  requestSessionid String,
+  sessionid String,
+  failedAccess String,
+  oggetto String
+}
+
+entity TabTipiRichiesta {
+  idTipoRichiesta Integer,
+  descrRichiesta String,
+  dataInizioValidita ZonedDateTime,
+  dataFineValidita ZonedDateTime,
+  rifExcel String,
+  tpInterno String,
+  rifEmail String
+}
+
+entity UtentiRichieste {
+  idRichiesta Integer,
+  dataRichiesta ZonedDateTime,
+  richiestaXml Blob,
+  rifRichiesta String
+}
+
+entity TabTipiRichiestaAll {
+  id TabTipiRichiestaAllId,
+  obbligatorio String
+}
+
+entity TabPrivacy {
+  id TabPrivacyId,
+  titoloConsenso String,
+  iconaConsenso String,
+  testoConsenso String,
+  testoConsensoS String,
+  testoConsensoN String,
+  valoriConsenso String,
+  validaConsenso String
+}
+
+entity TabTipiAllegato {
+  codAllegato String,
+  descrAllegato String,
+  tpInterno String
+}
+
+entity TabNazioni {
+  codNazione String,
+  nomeNazione String,
+  codNazioneAlfanum String,
+  codNazioneNum Integer,
+  nazioneUtente String
+}
+
+entity TabComuni {
+  codProgr Integer,
+  comuDescr String,
+  comuPrefisso String,
+  comuCap String,
+  provincia String,
+  comuCod String,
+  dtInizioValid ZonedDateTime,
+  dtFineValid ZonedDateTime,
+  codComuIsvap String,
+  codIstat Integer,
+  codIso String,
+  codIso3 String,
+  codNazBds String
+}
+
+entity TabParProgetto {
+  codPar String,
+  descrPar String,
+  tipoPar String,
+  flagPar String,
+  numPar Long,
+  dataPar ZonedDateTime,
+  impPar BigDecimal,
+  testoPar String
+}
+
+entity TabGaranzie {
+  codGara String,
+  descrGara String,
+  visCapitale String,
+  tpInterno String
+}
+
+entity StoricoPassword {
+  id StoricoPasswordId,
+  pwd String
+}
+
+entity TabProvince {
+  siglaProv String,
+  nomeProv String,
+  codiceIstat String,
+  estero String
+}
+
+relationship OneToMany {
+  Utenti{utentiRuolis} to UtentiRuoli{utenti}
+}
+
+relationship OneToMany {
+  Utenti{storicoPasswords} to StoricoPassword{utenti}
+}
+
+relationship OneToMany {
+  Utenti{actionLogsForCodUteDest} to ActionLog{utentiByCodUteDest}
+}
+
+relationship OneToMany {
+  Utenti{actionLogsForCodUte} to ActionLog{utentiByCodUte}
+}
+
+relationship OneToMany {
+  Utenti{utentiRichiestes} to UtentiRichieste{utenti}
+}
+
+relationship OneToMany {
+  TabProdotti{tabProdottiDocs} to TabProdottiDoc{tabProdotti}
+}
+
+relationship OneToMany {
+  TabTipiOggetto{tabTipiRichiestas} to TabTipiRichiesta{tabTipiOggetto}
+}
+
+relationship OneToMany {
+  TabTipiOggetto{tabProdottis} to TabProdotti{tabTipiOggetto}
+}
+
+relationship OneToMany {
+  TabTipiRichiesta{utentiRichiestes} to UtentiRichieste{tabTipiRichiesta}
+}
+
+relationship OneToMany {
+  TabTipiRichiesta{tabTipiRichiestaAlls} to TabTipiRichiestaAll{tabTipiRichiesta}
+}
+
+relationship OneToMany {
+  TabTipiRichiesta{tabTipiRichiestaDocs} to TabTipiRichiestaDoc{tabTipiRichiesta}
+}
+
+relationship OneToMany {
+  UtentiRichieste{utentiRichiesteAlls} to UtentiRichiesteAll{utentiRichieste}
+}
+
+relationship OneToMany {
+  TabTipiAllegato{utentiRichiesteAlls} to UtentiRichiesteAll{tabTipiAllegato}
+}
+
+relationship OneToMany {
+  TabTipiAllegato{tabTipiRichiestaAlls} to TabTipiRichiestaAll{tabTipiAllegato}
+}
+
+relationship OneToMany {
+  TabNazioni{utentis} to Utenti{tabNazioni}
+}
+
+relationship OneToMany {
+  TabNazioni{tabComunis} to TabComuni{tabNazioni}
+}
+
+relationship OneToMany {
+  TabProvince{utentis} to Utenti{tabProvince}
+}
+
+relationship OneToMany {
+  TabProvince{tabComunis} to TabComuni{tabProvince}
+}
+
+paginate UtentiRichiesteAll with pagination
+
+paginate Utenti with pagination
+
+paginate TabTipiRichiestaDoc with pagination
+
+paginate TabProdottiDoc with pagination
+
+paginate TabProdotti with pagination
+
+paginate UtentiRuoli with pagination
+
+paginate TabTipiOggetto with pagination
+
+paginate ActionLog with pagination
+
+paginate TabTipiRichiesta with pagination
+
+paginate UtentiRichieste with pagination
+
+paginate TabTipiRichiestaAll with pagination
+
+paginate TabPrivacy with pagination
+
+paginate TabTipiAllegato with pagination
+
+paginate TabNazioni with pagination
+
+paginate TabComuni with pagination
+
+paginate TabParProgetto with pagination
+
+paginate TabGaranzie with pagination
+
+paginate StoricoPassword with pagination
+
+paginate TabProvince with pagination
+
+dto UtentiRichiesteAll with mapstruct
+service UtentiRichiesteAll with serviceClass
+
+dto Utenti with mapstruct
+service Utenti with serviceClass
+
+dto TabTipiRichiestaDoc with mapstruct
+service TabTipiRichiestaDoc with serviceClass
+
+dto TabProdottiDoc with mapstruct
+service TabProdottiDoc with serviceClass
+
+dto TabProdotti with mapstruct
+service TabProdotti with serviceClass
+
+dto UtentiRuoli with mapstruct
+service UtentiRuoli with serviceClass
+
+dto TabTipiOggetto with mapstruct
+service TabTipiOggetto with serviceClass
+
+dto ActionLog with mapstruct
+service ActionLog with serviceClass
+
+dto TabTipiRichiesta with mapstruct
+service TabTipiRichiesta with serviceClass
+
+dto UtentiRichieste with mapstruct
+service UtentiRichieste with serviceClass
+
+dto TabTipiRichiestaAll with mapstruct
+service TabTipiRichiestaAll with serviceClass
+
+dto TabPrivacy with mapstruct
+service TabPrivacy with serviceClass
+
+dto TabTipiAllegato with mapstruct
+service TabTipiAllegato with serviceClass
+
+dto TabNazioni with mapstruct
+service TabNazioni with serviceClass
+
+dto TabComuni with mapstruct
+service TabComuni with serviceClass
+
+dto TabParProgetto with mapstruct
+service TabParProgetto with serviceClass
+
+dto TabGaranzie with mapstruct
+service TabGaranzie with serviceClass
+
+dto StoricoPassword with mapstruct
+service StoricoPassword with serviceClass
+
+dto TabProvince with mapstruct
+service TabProvince with serviceClass
+
+
